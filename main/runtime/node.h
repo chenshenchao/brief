@@ -20,7 +20,7 @@ typedef enum node_type_e
  * 分叉节点。
  * 
  */
-struct fork_s
+typedef struct fork_s
 {
     struct node_s *left;
     struct node_s *right;
@@ -32,10 +32,10 @@ struct fork_s
  */
 typedef struct node_s
 {
-    enum node_type_e type;
+    node_type_t type;
     union {
         double number;
-        struct fork_s fork;
+        fork_t fork;
     } value;
 } node_t;
 
