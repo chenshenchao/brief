@@ -1,48 +1,25 @@
+
+runtime_sources = $(shell ls main/runtime/*.c)
+runtime_headers = $(shell ls main/runtime/*.h)
+syntax_sources = $(shell ls main/syntax/*.c)
+syntax_headers = $(shell ls main/syntax/*.h)
+
 out/brief: out \
+		main/grammar/brief.h \
 		main/grammar/brief.bison.c \
 		main/grammar/brief.bison.h \
 		main/grammar/brief.flex.c \
-		main/runtime/any.c \
-		main/runtime/any.h \
-		main/runtime/array.c \
-		main/runtime/array.h \
-		main/runtime/heap.c \
-		main/runtime/heap.h \
-		main/runtime/node.c \
-		main/runtime/node.h \
-		main/runtime/object.c \
-		main/runtime/object.h \
-		main/runtime/scope.c \
-		main/runtime/scope.h \
-		main/runtime/stack.c \
-		main/runtime/stack.h \
-		main/runtime/string.c \
-		main/runtime/string.h \
-		main/runtime/variable.c \
-		main/runtime/variable.h \
-		main/syntax/call.c \
-		main/syntax/call.h \
-		main/syntax/let.c \
-		main/syntax/let.h \
-		main/syntax/operation.c \
-		main/syntax/operation.h \
+		$(runtime_headers) \
+		$(runtime_sources) \
+		$(syntax_headers) \
+		$(syntax_sources) \
 		main/interpreter.c \
 		main/console.c
 	gcc -o out/brief \
 		main/grammar/brief.flex.c \
 		main/grammar/brief.bison.c \
-		main/runtime/any.c \
-		main/runtime/array.c \
-		main/runtime/heap.c \
-		main/runtime/node.c \
-		main/runtime/object.c \
-		main/runtime/scope.c \
-		main/runtime/stack.c \
-		main/runtime/string.c \
-		main/runtime/variable.c \
-		main/syntax/call.c \
-		main/syntax/let.c \
-		main/syntax/operation.c \
+		$(runtime_sources) \
+		$(syntax_sources) \
 		main/interpreter.c \
 		main/console.c
 out:
