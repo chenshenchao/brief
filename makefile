@@ -18,6 +18,14 @@ out/brief: out \
 		main/runtime/stack.h \
 		main/runtime/string.c \
 		main/runtime/string.h \
+		main/runtime/variable.c \
+		main/runtime/variable.h \
+		main/syntax/call.c \
+		main/syntax/call.h \
+		main/syntax/let.c \
+		main/syntax/let.h \
+		main/syntax/operation.c \
+		main/syntax/operation.h \
 		main/interpreter.c \
 		main/console.c
 	gcc -o out/brief \
@@ -31,6 +39,10 @@ out/brief: out \
 		main/runtime/scope.c \
 		main/runtime/stack.c \
 		main/runtime/string.c \
+		main/runtime/variable.c \
+		main/syntax/call.c \
+		main/syntax/let.c \
+		main/syntax/operation.c \
 		main/interpreter.c \
 		main/console.c
 out:

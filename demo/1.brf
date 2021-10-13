@@ -1,1 +1,2 @@
-a = true;
+let a = 1;
+let b = 12345.6;

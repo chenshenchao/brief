@@ -1,6 +1,10 @@
 #ifndef RUNTIME_NODE_H
 #define RUNTIME_NODE_H
 
+#include "any.h"
+#include "../syntax/operation.h"
+#include "../syntax/let.h"
+
 /**
  * 抽象语法树节点类型。
  * 
@@ -8,23 +12,12 @@
 typedef enum node_type_e
 {
     NT_NIL = 0,
-    NT_NUMBER,         // 数字
-    NT_ADDITION,       // 加法
-    NT_SUBTRACTION,    // 减法
-    NT_MULTIPLICATION, // 乘法
-    NT_DIVISION,       // 除法
-    NT_END = -1        // 结尾
+    NT_OPERAND,         // 操作数
+    NT_IDENTIFIER,      // 变量
+    NT_OPERATION,       // 操作
+    NT_LET,             // 声明
+    NT_END = -1         // 结尾
 } node_type_t;
-
-/**
- * 分叉节点。
- * 
- */
-typedef struct fork_s
-{
-    struct node_s *left;
-    struct node_s *right;
-} fork_t;
 
 /**
  * 构建抽象语法树的节点。
@@ -33,14 +26,22 @@ typedef struct fork_s
 typedef struct node_s
 {
     node_type_t type;
-    union {
-        double number;
-        fork_t fork;
+    union
+    {
+        any_t operand;
+        const char *identifier;
+        node_operation_t operation;
+        node_let_t node_let;
     } value;
 } node_t;
 
-node_t *new_fork(node_type_t type, node_t *left, node_t *right);
-node_t *new_number(double number);
+node_t *new_node_operation(node_operation_type_t type, node_t *left, node_t *right);
+node_t *new_node_let(node_t *name, node_t *expression);
+
+node_t *new_node_operand(const any_t *value);
+node_t *new_node_identifier(const char *value);
+node_t *new_node_number(double value);
+node_t *new_node_boolean(bool value);
 void free_node(node_t *node);
 
 #endif

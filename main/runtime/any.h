@@ -2,7 +2,6 @@
 #define ANY_H
 
 #include <stdbool.h>
-#include "node.h"
 #include "native.h"
 
 /* 类型枚举 */
@@ -27,7 +26,5 @@ typedef struct any_s
         pointer_t pointer;
     } value;
 } any_t;
-
-any_t evalute(node_t *node);
 
 #endif

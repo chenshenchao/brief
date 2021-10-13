@@ -30,12 +30,14 @@ ENONATION ([Ee][-+]?[0-9]+)
 <INITIAL>"if" { return K_IF; }
 <INITIAL>"else" { return K_ELSE; }
 <INITIAL>"fn" { return K_FN; }
+<INITIAL>"let" { return K_LET; }
 <INITIAL>"true" { return K_TRUE; }
 <INITIAL>"false" { return K_FALSE; }
 <INITIAL>"null" { return K_NULL; }
 
  /* 标识符 */
 <INITIAL>[A-Za-z][0-9A-Za-z]* {
+    yylval.node = new_node_identifier(yytext);
     return IDENTIFIER;
 }
 
@@ -45,7 +47,7 @@ ENONATION ([Ee][-+]?[0-9]+)
     return L_NUMBER;
 }
 
-<INITIAL>\n { return EOL; }
+<INITIAL>\r?\n { return EOL; }
 <INITIAL>[ \t] { }
 
  /* 字符串字面量 */
@@ -64,7 +66,7 @@ ENONATION ([Ee][-+]?[0-9]+)
 }
 
  /* 换行切换回正常模式 */
-<COMMENT_MODE>\n {
+<COMMENT_MODE>\r?\n {
     BEGIN INITIAL;
 }
 
@@ -73,7 +75,7 @@ ENONATION ([Ee][-+]?[0-9]+)
 
  /* 未定义的词素，报错，必须在最后 */
 <INITIAL>. {
-    yyerror("Mystery charactor %c\n", *yytext);
+    yyerror("Mystery charactor [%c]\n", *yytext);
 }
 
 %%

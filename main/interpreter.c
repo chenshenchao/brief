@@ -34,6 +34,9 @@ int interpret(FILE *stream)
         fprintf(stderr, "syntax: error");
         return -1;
     }
+
+    /* 遍历树执行 */
+    
     return 0;
 }
 

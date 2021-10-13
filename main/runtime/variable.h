@@ -7,7 +7,7 @@
 /* 变量链表节点 */
 typedef struct variable_s
 {
-    wchar_t *name;
+    char *name;
     struct any_s value;
     struct variable_s *next;
 } variable_t;
