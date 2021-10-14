@@ -31,8 +31,14 @@ ENONATION ([Ee][-+]?[0-9]+)
 <INITIAL>"else" { return K_ELSE; }
 <INITIAL>"fn" { return K_FN; }
 <INITIAL>"let" { return K_LET; }
-<INITIAL>"true" { return K_TRUE; }
-<INITIAL>"false" { return K_FALSE; }
+<INITIAL>"true" {
+    yylval.boolean = true;
+    return K_TRUE;
+}
+<INITIAL>"false" {
+    yylval.boolean = false;
+    return K_FALSE;
+}
 <INITIAL>"null" { return K_NULL; }
 
  /* 标识符 */

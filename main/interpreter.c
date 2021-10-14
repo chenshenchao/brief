@@ -8,7 +8,7 @@ extern FILE *yyin;
 extern int yylineno;
 extern int yyparse();
 
-static interpreter_t interpreter;
+interpreter_t interpreter;
 
 /* 初始化解释器 */
 void init_interpreter()

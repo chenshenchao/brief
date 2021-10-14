@@ -1,10 +1,14 @@
 %{
     #include <stdio.h>
     #include "brief.h"
+    #include "../interpreter.h"
+
+    extern interpreter_t interpreter;
 %}
 
 // 返回数据类型
 %union {
+    bool boolean;
     double number;
     struct any_s *value;
     struct node_s *node;
@@ -22,7 +26,7 @@
 %token K_IF K_ELSE
 %token K_FN
 %token K_LET
-%token K_TRUE K_FALSE
+%token <boolean> K_TRUE K_FALSE
 %token K_NULL
 
 // 结合性（标注）与优先级（低到高）
@@ -30,28 +34,47 @@
 %left PLUS MINUS
 %left STAR SLASH
 
-%type <node> program statement expression let
+%type <node> program statement statement_list expression let block
 
 %start program
 
 %%
 
-program: statement EOL {
-        
-    }
-    | program statement EOL {
-        
+program: statement_list {
+        interpreter.tree_root = $$;
     }
     ;
 
 statement:
-    expression SEMICOLON { $$ = $1; }
+    expression SEMICOLON {
+        $$ = $1;
+    }
     | let
+    | block
+    | statement EOL {
+        $$ = $1;
+    }
+    ;
+
+statement_list:
+    statement {
+        $$ = new_node_operation(NOT_BLOCK, $1, 0);
+    }
+    | statement_list statement {
+        $1->value.operation.right = $2;
+        $$ = $1;
+    }
     ;
 
  /* 表达式 */
 expression:
-    L_NUMBER {
+    K_TRUE {
+        $$ = new_node_boolean($1);
+    }
+    | K_FALSE {
+        $$ = new_node_boolean($1);
+    }
+    | L_NUMBER {
         $$ = new_node_number($1);
     }
     | expression PLUS expression {
@@ -78,11 +101,12 @@ let: K_LET IDENTIFIER EQUAL expression SEMICOLON {
     }
     ;
 
- /*
-block: C_L C_R {
-
+block: C_L statement_list C_R {
+        $$ = $2;
     }
     ;
+
+/*
 
 function: K_FN IDENTIFIER P_L P_R {
 
