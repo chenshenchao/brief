@@ -17,6 +17,8 @@ ENONATION ([Ee][-+]?[0-9]+)
 <INITIAL>"*" { return STAR; }
 <INITIAL>"/" { return SLASH; }
 <INITIAL>"=" { return EQUAL; }
+<INITIAL>"." { return DOT; }
+<INITIAL>"," { return COMMA; }
 <INITIAL>":" { return COLON; }
 <INITIAL>";" { return SEMICOLON; }
 <INITIAL>"(" { return P_L; }

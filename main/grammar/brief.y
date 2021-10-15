@@ -21,6 +21,7 @@
 %token <node> IDENTIFIER
 %token PLUS MINUS STAR SLASH EQUAL
 %token COLON SEMICOLON
+%token COMMA DOT
 %token EOL
 %token P_L P_R B_L B_R C_L C_R
 %token K_IF K_ELSE
@@ -33,8 +34,10 @@
 %right EQUAL
 %left PLUS MINUS
 %left STAR SLASH
+%left COMMA
+%left DOT
 
-%type <node> program statement statement_list expression let block
+%type <node> program statement statement_list expression expression_list let block
 
 %start program
 
@@ -77,6 +80,9 @@ expression:
     | L_NUMBER {
         $$ = new_node_number($1);
     }
+    | IDENTIFIER {
+        $$ = $1;
+    }
     | expression PLUS expression {
         $$ = new_node_operation(NOT_PLUS, $1, $3);
     }
@@ -92,9 +98,21 @@ expression:
     | IDENTIFIER EQUAL expression {
         $$ = new_node_operation(NOT_EQUAL, $1, $3);
     }
+    | IDENTIFIER P_L expression_list P_R {
+        $$ = new_node_call($1, $3);
+    }
     ;
 
-
+expression_list: 
+    expression COMMA expression_list {
+        $$ = new_node_operation(NOT_LIST, $1, 0);
+        $$->value.operation.left = $1;
+        $$->value.operation.right = $3;
+    }
+    | expression {
+        $$ = new_node_operation(NOT_LIST, $1, 0);
+    }
+    ;
 
 let: K_LET IDENTIFIER EQUAL expression SEMICOLON {
         $$ = new_node_let($2, $4);

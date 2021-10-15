@@ -18,6 +18,12 @@ node_t *new_node_let(node_t *name, node_t *expression)
     result->value.node_let.expression = expression;
     return result;
 }
+node_t *new_node_call(node_t *name, node_t *args){
+    node_t *result = malloc(sizeof(node_t));
+    result->type = NT_CALL;
+    result->value.node_call.name = name;
+    result->value.node_call.args = args;
+}
 
 node_t *new_node_operand(const any_t *value)
 {

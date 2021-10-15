@@ -13,6 +13,14 @@ interpreter_t interpreter;
 /* 初始化解释器 */
 void init_interpreter()
 {
+    interpreter.global_scope.list_head = 0;
+    interpreter.global_scope.periphery = 0;
+    interpreter.current_scope = &interpreter.global_scope;
+    interpreter.heap.head = 0;
+    interpreter.heap.size = 0;
+    interpreter.heap.threshold = 2000000;
+    interpreter.stack.size = 0;
+    interpreter.tree_root = 0;
 }
 
 /* 释放解释器 */

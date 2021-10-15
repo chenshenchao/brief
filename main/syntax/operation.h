@@ -9,6 +9,7 @@ typedef enum node_operation_type_e
     NOT_SLASH,
     NOT_EQUAL,
     NOT_BLOCK,
+    NOT_LIST,
 } node_operation_type_t;
 
 typedef struct node_operation_s

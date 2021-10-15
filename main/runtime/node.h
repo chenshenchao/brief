@@ -2,6 +2,7 @@
 #define RUNTIME_NODE_H
 
 #include "any.h"
+#include "../syntax/call.h"
 #include "../syntax/operation.h"
 #include "../syntax/let.h"
 
@@ -16,6 +17,7 @@ typedef enum node_type_e
     NT_IDENTIFIER,      // 变量
     NT_OPERATION,       // 操作
     NT_LET,             // 声明
+    NT_CALL,            // 调用
     NT_END = -1         // 结尾
 } node_type_t;
 
@@ -32,11 +34,13 @@ typedef struct node_s
         const char *identifier;
         node_operation_t operation;
         node_let_t node_let;
+        node_call_t node_call;
     } value;
 } node_t;
 
 node_t *new_node_operation(node_operation_type_t type, node_t *left, node_t *right);
 node_t *new_node_let(node_t *name, node_t *expression);
+node_t *new_node_call(node_t *name, node_t *args);
 
 node_t *new_node_operand(const any_t *value);
 node_t *new_node_identifier(const char *value);

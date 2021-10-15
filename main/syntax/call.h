@@ -5,6 +5,6 @@ typedef struct node_call_s
 {
     struct node_s *name;
     struct node_s *args;
-} node_call_type_t;
+} node_call_t;
 
 #endif
