@@ -1,8 +1,6 @@
 
 runtime_sources = $(shell ls main/runtime/*.c)
 runtime_headers = $(shell ls main/runtime/*.h)
-syntax_sources = $(shell ls main/syntax/*.c)
-syntax_headers = $(shell ls main/syntax/*.h)
 
 out/brief: out \
 		main/grammar/brief.h \
@@ -11,15 +9,12 @@ out/brief: out \
 		main/grammar/brief.flex.c \
 		$(runtime_headers) \
 		$(runtime_sources) \
-		$(syntax_headers) \
-		$(syntax_sources) \
 		main/interpreter.c \
 		main/console.c
 	gcc -o out/brief \
 		main/grammar/brief.flex.c \
 		main/grammar/brief.bison.c \
 		$(runtime_sources) \
-		$(syntax_sources) \
 		main/interpreter.c \
 		main/console.c
 out:

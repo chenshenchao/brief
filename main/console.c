@@ -10,7 +10,7 @@ int main(int argc, char **args)
 {
     if (argc != 2)
     {
-        fprintf(stderr, "usage:%s script.brf", args[0]);
+        fprintf(stderr, "示例：%s script.brf\n", args[0]);
         return -1;
     }
 
@@ -18,7 +18,7 @@ int main(int argc, char **args)
     FILE *stream = fopen(args[1], "r");
     if (stream == NULL)
     {
-        fprintf(stderr, "%s is not found.", args[1]);
+        fprintf(stderr, "%s 不是有效的文件路径。", args[1]);
         return -2;
     }
 

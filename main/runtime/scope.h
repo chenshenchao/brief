@@ -5,7 +5,8 @@
 typedef struct scope_s
 {
     struct scope_s *periphery;
-    struct variable_s *list_head;
+    struct variable_s *head;
+    struct variable_s *tail;
 } scope_t;
 
 #endif

@@ -1,6 +1,7 @@
 #ifndef BRIEF_INTERPRETER_H
 #define BRIEF_INTERPRETER_H
 
+#include <stdio.h>
 #include "runtime/heap.h"
 #include "runtime/node.h"
 #include "runtime/scope.h"

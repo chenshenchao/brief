@@ -55,8 +55,7 @@ ENONATION ([Ee][-+]?[0-9]+)
     return L_NUMBER;
 }
 
-<INITIAL>\r?\n { return EOL; }
-<INITIAL>[ \t] { }
+<INITIAL>[ \t\r\n] { }
 
  /* 字符串字面量 */
 <INITIAL>\" {

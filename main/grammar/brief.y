@@ -12,7 +12,6 @@
     double number;
     struct any_s *value;
     struct node_s *node;
-    struct variable_s *identifier;
 }
 
 // 词素
@@ -22,7 +21,6 @@
 %token PLUS MINUS STAR SLASH EQUAL
 %token COLON SEMICOLON
 %token COMMA DOT
-%token EOL
 %token P_L P_R B_L B_R C_L C_R
 %token K_IF K_ELSE
 %token K_FN
@@ -44,7 +42,8 @@
 %%
 
 program: statement_list {
-        interpreter.tree_root = $$;
+        interpreter.tree_root = $1;
+        $$ = $1;
     }
     ;
 
@@ -52,20 +51,20 @@ statement:
     expression SEMICOLON {
         $$ = $1;
     }
-    | let
-    | block
-    | statement EOL {
+    | let {
+        $$ = $1;
+    }
+    | block {
         $$ = $1;
     }
     ;
 
 statement_list:
     statement {
-        $$ = new_node_operation(NOT_BLOCK, $1, 0);
+        $$ = $1;
     }
     | statement_list statement {
-        $1->value.operation.right = $2;
-        $$ = $1;
+        $$ = new_node_operation(NOT_BLOCK, $1, $2);
     }
     ;
 
@@ -99,23 +98,21 @@ expression:
         $$ = new_node_operation(NOT_EQUAL, $1, $3);
     }
     | IDENTIFIER P_L expression_list P_R {
-        $$ = new_node_call($1, $3);
+        $$ = new_node_operation(NOT_CALL, $1, $3);
     }
     ;
 
 expression_list: 
     expression COMMA expression_list {
-        $$ = new_node_operation(NOT_LIST, $1, 0);
-        $$->value.operation.left = $1;
-        $$->value.operation.right = $3;
+        $$ = new_node_operation(NOT_LIST, $1, $3);
     }
     | expression {
-        $$ = new_node_operation(NOT_LIST, $1, 0);
+        $$ = $1;
     }
     ;
 
 let: K_LET IDENTIFIER EQUAL expression SEMICOLON {
-        $$ = new_node_let($2, $4);
+        $$ = new_node_operation(NOT_LET, $2, $4);
     }
     ;
 
@@ -126,7 +123,7 @@ block: C_L statement_list C_R {
 
 /*
 
-function: K_FN IDENTIFIER P_L P_R {
+function: K_FN IDENTIFIER P_L expression_list P_R {
 
     }
     ;

@@ -7,9 +7,11 @@
 /* 变量链表节点 */
 typedef struct variable_s
 {
-    char *name;
+    const char *name;
     struct any_s value;
     struct variable_s *next;
 } variable_t;
+
+variable_t *new_variable(const char *name);
 
 #endif

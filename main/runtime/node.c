@@ -10,20 +10,6 @@ node_t *new_node_operation(node_operation_type_t type, node_t *left, node_t *rig
     result->value.operation.right = right;
     return result;
 }
-node_t *new_node_let(node_t *name, node_t *expression)
-{
-    node_t *result = malloc(sizeof(node_t));
-    result->type = NT_LET;
-    result->value.node_let.name = name;
-    result->value.node_let.expression = expression;
-    return result;
-}
-node_t *new_node_call(node_t *name, node_t *args){
-    node_t *result = malloc(sizeof(node_t));
-    result->type = NT_CALL;
-    result->value.node_call.name = name;
-    result->value.node_call.args = args;
-}
 
 node_t *new_node_operand(const any_t *value)
 {
@@ -70,10 +56,6 @@ void free_node(node_t *node)
     case NT_OPERATION:
         free_node(node->value.operation.left);
         free_node(node->value.operation.right);
-        break;
-    case NT_LET:
-        free_node(node->value.node_let.expression);
-        free(node->value.node_let.name);
         break;
     }
     free(node);
