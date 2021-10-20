@@ -28,6 +28,4 @@ typedef struct object_s {
     struct object_s *back;
 } object_t;
 
-void mark_garbage(object_t *target);
-
 #endif

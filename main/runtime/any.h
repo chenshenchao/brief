@@ -7,6 +7,7 @@
 /* 类型枚举 */
 typedef enum any_type_e
 {
+    AT_VOID = -1,
     AT_NULL = 0,
     AT_BOOL,
     AT_NUMBER,

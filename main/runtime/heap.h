@@ -9,6 +9,8 @@ typedef struct heap_s
     struct object_s *head;
 } heap_t;
 
-void clear_mark(heap_t *heap);
+void mark_garbage_all(heap_t *heap);
+struct object_s *alloc_object(heap_t *heap, int size);
+void free_object(heap_t *heap, struct object_s *one);
 
 #endif

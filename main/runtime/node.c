@@ -1,4 +1,6 @@
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "node.h"
 
 node_t *new_node_operation(node_operation_type_t type, node_t *left, node_t *right)
@@ -19,11 +21,13 @@ node_t *new_node_operand(const any_t *value)
     return result;
 }
 
-node_t *new_node_identifier(const char *value)
+node_t *new_node_identifier(const char *value, int length)
 {
     node_t *result = malloc(sizeof(node_t));
+    char *buffer = malloc(sizeof(char) * length);
+    strcpy(buffer, value);
     result->type = NT_IDENTIFIER;
-    result->value.identifier = value;
+    result->value.identifier = buffer;
     return result;
 }
 node_t *new_node_number(double value)
@@ -59,4 +63,17 @@ void free_node(node_t *node)
         break;
     }
     free(node);
+}
+
+any_t interpret_node(node_t *node)
+{
+    switch (node->type)
+    {
+    case NT_OPERAND:
+        return node->value.operand;
+    case NT_OPERATION:
+        return interpret_operation(&node->value.operation);
+    }
+    fprintf(stderr, "标识符节点不该被直接解释：%s", node->value.identifier);
+    exit(-1);
 }

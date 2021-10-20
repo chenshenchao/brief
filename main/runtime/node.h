@@ -37,9 +37,11 @@ typedef struct node_s
 node_t *new_node_operation(node_operation_type_t type, node_t *left, node_t *right);
 
 node_t *new_node_operand(const any_t *value);
-node_t *new_node_identifier(const char *value);
+node_t *new_node_identifier(const char *value, int length);
 node_t *new_node_number(double value);
 node_t *new_node_boolean(bool value);
 void free_node(node_t *node);
+
+any_t interpret_node(node_t *node);
 
 #endif

@@ -45,7 +45,7 @@ ENONATION ([Ee][-+]?[0-9]+)
 
  /* 标识符 */
 <INITIAL>[A-Za-z][0-9A-Za-z]* {
-    yylval.node = new_node_identifier(yytext);
+    yylval.node = new_node_identifier(yytext, yyleng);
     return IDENTIFIER;
 }
 
