@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "runtime/heap.h"
 #include "runtime/node.h"
+#include "runtime/definition.h"
 #include "runtime/scope.h"
 #include "runtime/stack.h"
 
@@ -13,6 +14,7 @@ typedef struct interpreter_s
     scope_t global_scope;
     scope_t *current_scope;
     node_t *tree_root;
+    node_definition_t *definitioin_root;
     heap_t heap;
     stack_t stack;
 } interpreter_t;

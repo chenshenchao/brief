@@ -21,6 +21,7 @@
 %token PLUS MINUS STAR SLASH EQUAL
 %token COLON SEMICOLON
 %token COMMA DOT
+%token ARROW_L ARROW_R
 %token P_L P_R B_L B_R C_L C_R
 %token K_IF K_ELSE
 %token K_FN
@@ -35,7 +36,7 @@
 %left COMMA
 %left DOT
 
-%type <node> program statement statement_list expression expression_list let block
+%type <node> program statement statement_list expression expression_list let block identifier_list
 
 %start program
 
@@ -100,6 +101,9 @@ expression:
     | IDENTIFIER P_L expression_list P_R {
         $$ = new_node_operation(NOT_CALL, $1, $3);
     }
+    | P_L identifier_list P_L ARROW_R block {
+        
+    }
     ;
 
 expression_list: 
@@ -107,6 +111,15 @@ expression_list:
         $$ = new_node_operation(NOT_LIST, $1, $3);
     }
     | expression {
+        $$ = $1;
+    }
+    ;
+
+identifier_list:
+    IDENTIFIER COMMA IDENTIFIER {
+        $$ = new_node_operation(NOT_IDENTIFIER_LIST, $1, $3);
+    }
+    | IDENTIFIER {
         $$ = $1;
     }
     ;

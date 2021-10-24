@@ -12,6 +12,7 @@ typedef enum node_operation_type_e
     NOT_EQUAL,
     NOT_BLOCK,
     NOT_LIST,
+    NOT_IDENTIFIER_LIST,
     NOT_LET,
     NOT_CALL,
 } node_operation_type_t;

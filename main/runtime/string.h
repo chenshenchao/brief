@@ -6,7 +6,7 @@
 
 typedef struct string_s {
     bool is_literal;
-    wchar_t *content;
+    char *content;
 } string_t;
 
 #endif

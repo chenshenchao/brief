@@ -21,6 +21,8 @@ ENONATION ([Ee][-+]?[0-9]+)
 <INITIAL>"," { return COMMA; }
 <INITIAL>":" { return COLON; }
 <INITIAL>";" { return SEMICOLON; }
+<INITIAL>"<-" { return ARROW_L; }
+<INITIAL>"->" { return ARROW_R; }
 <INITIAL>"(" { return P_L; }
 <INITIAL>")" { return P_R; }
 <INITIAL>"[" { return B_L; }

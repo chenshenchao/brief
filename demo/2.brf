@@ -1,3 +1,10 @@
-fn say_hello() {
+let say_hello = () -> {
     print("hello");
-}
+};
+
+let get_a_say = () -> {
+    let say_first = () -> {
+        print("first");
+    };
+    return say_first;
+};
